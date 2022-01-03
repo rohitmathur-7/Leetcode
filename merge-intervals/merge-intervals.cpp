@@ -1,46 +1,21 @@
 class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
-        sort(intervals.begin(),intervals.end()); 
-        // for(auto x:intervals){
-        //     for(auto y:x) cout<<y<<" ";
-        //     cout<<endl;
-        // }
         int n=intervals.size();
-        int l=0,r=0;
-        vector<vector<int>> ans;
-        bool g=false;
-        for(int i=1;i<n;i++){
-            if(intervals[i][0]<=intervals[r][1]){
-                if(intervals[i][1]>=intervals[r][1]) r=i;
-                // else r=l;
-                if(i==n-1){
-                    vector<int> tmp;
-                    tmp.push_back(intervals[l][0]);
-                    tmp.push_back(intervals[r][1]);
-                    ans.push_back(tmp);
-                    g=true;
-                    // cout<<"caled"<<endl;
-                    // cout<<"r: "<<r<<endl;
-                }
+        sort(intervals.begin(),intervals.end());
+        vector<vector<int> > res;
+        res.push_back(intervals[0]);
+        int j=0;
+        for(int i=0;i<n;i++){
+            //it means they can be merged
+            if(res[j][1]>=intervals[i][0]){
+                res[j][1]=max(res[j][1],intervals[i][1]);
             }
             else{
-                vector<int> tmp;
-            
-                tmp.push_back(intervals[l][0]);
-                tmp.push_back(intervals[r][1]);
-                ans.push_back(tmp);
-                l=i;
-                r=i;
+                j++;
+                res.push_back(intervals[i]);
             }
         }
-        if(!g){
-            vector<int> tmp;
-            tmp.push_back(intervals[n-1][0]);
-            tmp.push_back(intervals[n-1][1]);
-            ans.push_back(tmp);
-        }
-        
-        return ans;
+        return res;
     }
 };
