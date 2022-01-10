@@ -9,6 +9,9 @@ using namespace std;
 
 // arr: input array
 // n: size of array
+/*
+	Time Complexity - O(log(n))
+*/
 class Solution
 {
     public:
