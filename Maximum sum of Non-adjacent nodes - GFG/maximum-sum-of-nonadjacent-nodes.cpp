@@ -111,6 +111,10 @@ class Solution{
         /*We have 2 cases either we can include the current node or not include it,
           if we do include current node then we cannot include its children, else if we exclude the current node then we can include its childrens
           So we need maximum of both the cases
+          
+          Using just recursion will give us tle bcz we are computing a state many time,
+          so we will use DP, we will just strore the answer of roots and if we have
+          encountered current root before then we will just return its answer directly.
         */
         if(!root) return 0; //base case
         if(mp[root]) return mp[root];
