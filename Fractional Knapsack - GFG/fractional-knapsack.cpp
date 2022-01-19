@@ -20,36 +20,31 @@ struct Item{
 
 class Solution
 {
-   public:
-   static bool cmp(pair<double,pair<int,int> > a,pair<double,pair<int,int> > b){
-       return a.first>b.first; 
-   }
-   double fractionalKnapsack(int W, Item arr[], int n)
+    static bool comp(Item a,Item b){
+        double r1=(double)a.value/(double)a.weight;
+        double r2=(double)b.value/(double)b.weight;
+        return r1>r2;
+    }
+    public:
+    //Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int W, Item arr[], int n)
     {
         // Your code here
-        pair<double,pair<int,int> > p[n];
-        for(int i=0;i<n;i++){
-            double d=(double)((double)arr[i].value/(double)arr[i].weight);
-            p[i].first=d;
-            p[i].second.first=arr[i].weight;
-            p[i].second.second=arr[i].value;
-        }
-        sort(p,p+n,cmp);
+        sort(arr,arr+n,comp);
         double ans=0;
         for(int i=0;i<n;i++){
-            if(p[i].second.first<=W){
-                ans+=p[i].second.second;
-                W-=p[i].second.first;
+            if(arr[i].weight<=W){
+                ans+=arr[i].value;
+                W-=arr[i].weight;
             }
             else{
-                double qq=(double)((double)(p[i].second.second*W)/p[i].second.first);
-                ans+=qq;
+                ans+=(double)((double)arr[i].value/(double)arr[i].weight)*(double)W;
                 break;
             }
         }
         return ans;
     }
-       
+        
 };
 
 
