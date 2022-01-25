@@ -14,12 +14,12 @@ class Solution{
         // Your code here
         if(N==1){
             cout<<"move disk "<<N<<" from rod "<<from<<" to rod "<<to<<endl;
-            return 1;
+            return pow(2,N)-1;
         }
-        int a=1+toh(N-1,from,aux,to);
+        toh(N-1,from,aux,to);
         cout<<"move disk "<<N<<" from rod "<<from<<" to rod "<<to<<endl;
-        int b=toh(N-1,aux,to,from);
-        return a+b;
+        toh(N-1,aux,to,from);
+        return pow(2,N)-1;
     }
 
 };
