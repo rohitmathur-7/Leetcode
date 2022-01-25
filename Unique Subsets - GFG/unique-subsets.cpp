@@ -10,7 +10,6 @@ class Solution
     //Function to find all possible unique subsets.
     void solve(vector<int> arr,vector<int> v,set<vector<int>>& s,int i){
         if(arr.size()==i){
-            sort(v.begin(),v.end());
             s.insert(v);
             return;
         }
@@ -25,6 +24,7 @@ class Solution
         set<vector<int>> s;
         vector<int> v;
         int i=0;
+        sort(arr.begin(),arr.end());
         solve(arr,v,s,0);
         vector<vector<int> > ans;
         for(auto x:s){
