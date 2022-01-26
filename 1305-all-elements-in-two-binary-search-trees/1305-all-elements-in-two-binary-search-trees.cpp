@@ -21,8 +21,7 @@ public:
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2){
         vector<int> v1,v2;
         get(root1,v1);
-        get(root2,v2);
-        for(int i=0;i<v2.size();i++) v1.push_back(v2[i]);
+        get(root2,v1);
         sort(v1.begin(),v1.end());
         return v1;
     }
