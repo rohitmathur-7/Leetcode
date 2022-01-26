@@ -24,7 +24,7 @@ public:
         vector<int> ans;
         int out=0;
         solve(arr,N,out,ans);
-        sort(ans.begin(),ans.end());
+        // sort(ans.begin(),ans.end());
         return ans;
     }
 };
