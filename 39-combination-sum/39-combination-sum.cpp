@@ -12,7 +12,6 @@ public:
         if((sum+arr[idx])<=target){
             out.push_back(arr[idx]);
             solve(st,out,sum+arr[idx],target,arr,idx);
-            solve(st,out,sum+arr[idx],target,arr,idx+1);
         }
         
         return;
