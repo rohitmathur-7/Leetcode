@@ -41,19 +41,30 @@ struct Node
 class Solution
 {
     public:
+    int height(Node* root){
+        if(root==NULL) return 0;
+        int l=1+height(root->left);
+        int r=1+height(root->right);
+        return max(l,r);
+    }
+    void solve(Node* root,int level,vector<int>& ans){
+        if(root==NULL) return;
+        if(level==1){
+            ans.push_back(root->data);
+        }
+        else{
+            solve(root->left,level-1,ans);
+            solve(root->right,level-1,ans);
+        }
+    }
     //Function to return the level order traversal of a tree.
     vector<int> levelOrder(Node* root){
-      //Your code here
+      int h=height(root);
       vector<int> ans;
-      queue<Node*> q;
-      q.push(root);
-      while(!q.empty()){
-          Node* tmp=q.front();
-          q.pop();
-          ans.push_back(tmp->data);
-          if(tmp->left) q.push(tmp->left);
-          if(tmp->right) q.push(tmp->right);
+      for(int i=1;i<=h;i++){
+          solve(root,i,ans);
       }
+      
       return ans;
     }
 };
