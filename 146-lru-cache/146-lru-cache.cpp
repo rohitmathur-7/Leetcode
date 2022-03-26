@@ -31,10 +31,12 @@ public:
     }
     
     void deletenode(node* newnode){
-        node* delprev=newnode->prev;
-        node* delnxt=newnode->next;
-        delprev->next=delnxt;
-        delnxt->prev=delprev;
+        // node* delprev=newnode->prev;
+        // node* delnxt=newnode->next;
+        // delprev->next=delnxt;
+        // delnxt->prev=delprev;
+        newnode->prev->next=newnode->next;
+        newnode->next->prev=newnode->prev;
     }
     
     int get(int _key){
