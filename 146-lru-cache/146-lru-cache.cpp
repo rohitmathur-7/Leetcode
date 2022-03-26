@@ -23,11 +23,11 @@ public:
     }
     
     void addnode(node* newnode){
-        node* tmp=head->next;
-        newnode->next=tmp;
+        // node* tmp=head->next;
+        newnode->next=head->next;
         newnode->prev=head;
+        head->next->prev=newnode;
         head->next=newnode;
-        tmp->prev=newnode;
     }
     
     void deletenode(node* newnode){
