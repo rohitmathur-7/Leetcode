@@ -5,29 +5,28 @@ using namespace std;
  // } Driver Code Ends
 class Solution
 {
-    void topodfs(int idx,vector<int> adj[],vector<bool> &vis,stack<int> &s){
-        vis[idx]=true;
-        for(auto x: adj[idx]){
-            if(!vis[x]){
-                topodfs(x,adj,vis,s);
-            }
-        }
-        s.push(idx);
-    }
 	public:
 	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V,vector<int> adj[]){
 	    vector<int> ans;
-	    stack<int> s;
-	    vector<bool> vis(V,0);
+	    queue<int> q;
+	    vector<int> indegree(V,0);
 	    for(int i=0;i<V;i++){
-	        if(!vis[i]){
-	            topodfs(i,adj,vis,s);
+	        for(auto x:adj[i]){
+	            indegree[x]++;
 	        }
 	    }
-	    while(!s.empty()){
-	        ans.push_back(s.top());
-	        s.pop();
+	    for(int i=0;i<V;i++){
+	        if(indegree[i]==0) q.push(i);
+	    }
+	    while(!q.empty()){
+	        int a=q.front();
+	        q.pop();
+	        ans.push_back(a);
+	        for(auto x:adj[a]){
+	            indegree[x]--;
+	            if(indegree[x]==0) q.push(x);
+	        }
 	    }
 	    return ans;
 	}
