@@ -1,22 +1,14 @@
 class Solution {
 public:
     int lastStoneWeight(vector<int>& stones) {
-        int n=stones.size();
-        while(stones.size()>=1){
-            if(stones.size()==1) return stones[0];
-            sort(stones.begin(),stones.end());
-            int sze=stones.size();
-            if(stones[sze-1]==stones[sze-2]){
-                stones.erase(stones.begin()+sze-1);
-                stones.erase(stones.begin()+sze-2);
-            }
-            else{
-                int d=stones[sze-1]-stones[sze-2];
-                stones.erase(stones.begin()+sze-1);
-                stones.erase(stones.begin()+sze-2);
-                stones.push_back(d);
-            }
+        priority_queue<int> q(stones.begin(),stones.end());
+        while(q.size()>1){
+            int a=q.top();
+            q.pop();
+            int b=q.top();
+            q.pop();
+            if(a!=b) q.push(a-b);
         }
-        return 0;
+        return !q.empty()?q.top():0;
     }
 };
