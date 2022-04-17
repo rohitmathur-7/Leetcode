@@ -16,12 +16,19 @@ class Solution
         while(!pq.empty()){
             int a=pq.top().second;
             int d=pq.top().first;
-            for(int i=0;i<adj[a].size();i++){
-                int nd=d+adj[a][i][1];
-                if(dist[adj[a][i][0]]>nd){
-                    dist[adj[a][i][0]]=nd;
-                    pq.push({nd,adj[a][i][0]});
-                }   
+            // for(int i=0;i<adj[a].size();i++){
+            //     int nd=d+adj[a][i][1];
+            //     if(dist[adj[a][i][0]]>nd){
+            //         dist[adj[a][i][0]]=nd;
+            //         pq.push({nd,adj[a][i][0]});
+            //     }   
+            // }
+            for(auto x:adj[a]){
+                int nd=d+x[1];
+                if(dist[x[0]]>nd){
+                    dist[x[0]]=nd;
+                    pq.push({nd,x[0]});
+                }
             }
             pq.pop();
         }
