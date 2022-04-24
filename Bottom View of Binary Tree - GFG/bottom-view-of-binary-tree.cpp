@@ -103,19 +103,16 @@ class Solution {
         q.push({root,0});
         int level=0;
         while(!q.empty()){
-            int sze=q.size();
             pair<Node*,int> tp;
-            for(int i=0;i<sze;i++){
-                tp=q.front();
-                mp[tp.second]=tp.first->data;
-                if(tp.first->left!=NULL){
-                    q.push({tp.first->left,tp.second-1});
-                }
-                if(tp.first->right!=NULL){
-                    q.push({tp.first->right,tp.second+1});
-                }
-                q.pop();
+            tp=q.front();
+            mp[tp.second]=tp.first->data;
+            if(tp.first->left!=NULL){
+                q.push({tp.first->left,tp.second-1});
             }
+            if(tp.first->right!=NULL){
+                q.push({tp.first->right,tp.second+1});
+            }
+            q.pop();
         }
         for(auto x:mp){
             ans.push_back(x.second);
