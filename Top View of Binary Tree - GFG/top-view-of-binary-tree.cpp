@@ -114,7 +114,7 @@ class Solution
         while(!q.empty()){
             pair<Node*,int> tp;
             tp=q.front();
-            if(mp.find(tp.second)==mp.end()) mp[tp.second]=tp.first->data;
+            if(!mp[tp.second]) mp[tp.second]=tp.first->data;
             if(tp.first->left!=NULL){
                 q.push({tp.first->left,tp.second-1});
             }
