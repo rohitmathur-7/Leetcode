@@ -29,7 +29,7 @@ public:
                 if(node->left!=NULL) q.push({node->left,unsigned(2*cur_id)+1});
                 if(node->right!=NULL) q.push({node->right,unsigned(2*cur_id)+2});
             }
-            ans=unsigned(max(ans,last-first+1));
+            ans=max(ans,last-first+1);
         }
         return ans;
     }
