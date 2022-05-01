@@ -19,16 +19,15 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        if(root==NULL) return NULL;
-        auto L=root->left,R=root->right,N=root->next;
-        if(L!=NULL){
-            L->next=R;
-            if(N!=NULL){
-                R->next=N->left;
+        auto tmp=root;
+        for(;root;root=root->left){
+            for(auto cur=root;cur;cur=cur->next){
+                if(cur->left){
+                    cur->left->next=cur->right;
+                    if(cur->next) cur->right->next=cur->next->left;
+                }
             }
-            connect(L);
-            connect(R);
         }
-        return root;
+        return tmp;
     }
 };
