@@ -10,27 +10,15 @@
  */
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head) {
-        if(head==NULL) return NULL;
-        stack<ListNode*> st;
-        ListNode* tmp=head;
-        while(tmp!=NULL){
-            st.push(tmp);
-            tmp=tmp->next;
+    ListNode* reverseList(ListNode* head){
+        ListNode* pre=NULL;
+        ListNode* cur=head;
+        while(cur!=NULL){
+            ListNode* nxt=cur->next;
+            cur->next=pre;
+            pre=cur;
+            cur=nxt;
         }
-        int c=0;
-        while(!st.empty()){
-            ListNode* node=st.top();
-            st.pop();
-            if(c==0){
-                tmp=node;
-            }
-            if(!st.empty()){
-                node->next=st.top();
-            }
-            else node->next=NULL;
-            c++;
-        }
-        return tmp;
+        return pre;
     }
 };
