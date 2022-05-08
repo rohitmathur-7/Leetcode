@@ -10,56 +10,38 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* p1=list1;
-        ListNode* p2=list2;
-        ListNode* root=NULL;
-        ListNode* tmp=root;
-        while(p1!=NULL && p2!=NULL){
-            if(p1->val<p2->val){
-                if(root==NULL){
-                    root=p1;
-                    tmp=root;
-                }
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2){
+        if(list1==NULL) return list2;
+        ListNode* one=list1,*two=list2,*prev=NULL;
+        while(one!=NULL && two!=NULL){
+            if(one->val>two->val){
+                ListNode* node=new ListNode(two->val);
+                if(prev!=NULL) prev->next=node;
                 else{
-                    tmp->next=p1;
-                    tmp=tmp->next;
+                    list1=node;
                 }
-                p1=p1->next;
+                prev=node;
+                node->next=one;
+                two=two->next;
+            }
+            else if(one->val==two->val){
+                ListNode* node=new ListNode(two->val);
+                ListNode* nxt=one->next;
+                one->next=node;
+                node->next=nxt;
+                one=one->next;
+                two=two->next;
             }
             else{
-                if(root==NULL){
-                    root=p2;
-                    tmp=root;
-                }
-                else{
-                    tmp->next=p2;
-                    tmp=tmp->next;
-                }
-                p2=p2->next;
+                prev=one;
+                one=one->next;
             }
         }
-        if(p1!=NULL){
-            if(tmp!=NULL){
-                 tmp->next=p1;
-                tmp=tmp->next;
-            }
-            else{
-                root=p1;
-                tmp=p1;
-            }
-            p1=p1->next;
+        while(two!=NULL){
+            prev->next=two;
+            prev=two;
+            two=two->next;
         }
-        if(p2!=NULL){
-            if(tmp!=NULL){
-                tmp->next=p2;
-                tmp=tmp->next;
-            }
-            else{
-                root=p2;
-                tmp=p2;
-            }
-        }
-        return root;
+        return list1;
     }
 };
