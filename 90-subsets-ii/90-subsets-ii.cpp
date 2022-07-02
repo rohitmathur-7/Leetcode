@@ -1,25 +1,30 @@
 class Solution {
 public:
-    void solve(set<vector<int> >& st,vector<int> out,vector<int> arr){
-        if(arr.size()==0){
-            st.insert(out);
-            return;
+    void sub(vector<int> tmp,int idx,int n,set<vector<int> >& st,vector<int> arr){
+        if(idx==n) return;
+        for(int j=idx;j<n;j++){
+            tmp.push_back(arr[j]);
+            st.insert(tmp);
+            sub(tmp,j+1,n,st,arr);
+            tmp.erase(tmp.begin()+tmp.size()-1);
         }
-        vector<int> out1=out;
-        vector<int> out2=out;
-        out1.push_back(arr[0]);
-        arr.erase(arr.begin()+0);
-        solve(st,out1,arr);
-        solve(st,out2,arr);
-        return;
     }
-    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-        vector<vector<int>> ans;
-        vector<int> out;
+    vector<vector<int>> subsetsWithDup(vector<int>& arr) {
+        sort(arr.begin(),arr.end());
         set<vector<int> > st;
-        sort(nums.begin(),nums.end());
-        solve(st,out,nums);
-        for(auto x:st) ans.push_back(x);
+        int n=arr.size();
+        vector<int> empty;
+        st.insert(empty);
+        for(int i=0;i<n;i++){
+            vector<int> tmp;
+            tmp.push_back(arr[i]);
+            st.insert(tmp);
+            sub(tmp,i+1,n,st,arr);
+        }
+        vector<vector<int> > ans;
+        for(auto x:st){
+            ans.push_back(x);
+        }
         return ans;
     }
 };
