@@ -16,7 +16,7 @@ public:
     }
     vector<vector<int>> combinationSum(vector<int>& arr, int target) {
         vector<vector<int> > ans;
-        sort(arr.begin(),arr.end());
+        // sort(arr.begin(),arr.end());
         vector<int> ds;
         solve(0,0,arr,target,ds,ans);
         return ans;
