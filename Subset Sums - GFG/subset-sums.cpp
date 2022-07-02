@@ -6,21 +6,22 @@ using namespace std;
 class Solution
 {
 public:
-    void sum(int csum,int idx,vector<int> arr,int n,vector<int>& ans){
-        if(idx==n) return;
-        for(int j=idx;j<n;j++){
-            ans.push_back(csum+arr[j]);
-            sum(csum+arr[j],j+1,arr,n,ans);
+    void solve(int idx,int n,vector<int> arr,vector<int>& ans,int sum){
+        if(idx==n){
+            ans.push_back(sum);
+            return;
         }
-    }    
-    vector<int> subsetSums(vector<int> arr, int n){
+        //include current element
+        solve(idx+1,n,arr,ans,sum+arr[idx]);
+        //exclude current element
+        solve(idx+1,n,arr,ans,sum);
+    }
+    
+    vector<int> subsetSums(vector<int> arr, int n)
+    {
         // Write Your Code here
         vector<int> ans;
-        ans.push_back(0);
-        for(int i=0;i<n;i++){
-            ans.push_back(arr[i]);
-            sum(arr[i],i+1,arr,n,ans);
-        }
+        solve(0,n,arr,ans,0);
         return ans;
     }
 };
