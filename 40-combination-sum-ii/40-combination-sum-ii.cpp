@@ -1,24 +1,26 @@
 class Solution {
 public:
-    void solve(int ind,vector<vector<int>>& ans,vector<int> out,vector<int> candidates,int target){
-        if(target==0){
-            ans.push_back(out);
+    void solve(int idx,int sum,vector<int> arr,int target,vector<int> ds,vector<vector<int> > &ans){
+        if(sum>target) return;
+        if(sum==target){
+            ans.push_back(ds);
             return;
         }
-        for(int i=ind;i<candidates.size();i++){
-            if(i>ind && candidates[i]==candidates[i-1]) continue;
-            if(candidates[i]>target) break;
-            out.push_back(candidates[i]);
-            solve(i+1,ans,out,candidates,target-candidates[i]);
-            out.pop_back();
+        
+        for(int i=idx;i<arr.size();i++){
+            if(i!=idx && arr[i]==arr[i-1]) continue;
+            ds.push_back(arr[i]);
+            solve(i+1,sum+arr[i],arr,target,ds,ans);
+            ds.pop_back();
         }
-        return;
+        
     }
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target){
-        sort(candidates.begin(),candidates.end());
-        vector<vector<int>> ans;
-        vector<int> out;
-        solve(0,ans,out,candidates,target);
+    vector<vector<int>> combinationSum2(vector<int>& arr, int target) {
+        vector<vector<int> > ans;
+        vector<int> ds;
+        sort(arr.begin(),arr.end());
+        solve(0,0,arr,target,ds,ans);
+        
         return ans;
     }
 };
