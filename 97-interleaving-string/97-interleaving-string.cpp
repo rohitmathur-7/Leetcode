@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int dp[102][201];
+    int dp[101][201];
     
     bool solve(string s1,string s2,string s3,int idx1,int idx2,int idx3){
         if(idx3==s3.size()){
@@ -21,7 +21,9 @@ public:
             ans1=solve(s1,s2,s3,idx1,idx2+1,idx3+1);
         }
         
-        return dp[idx1][idx2]=ans1;
+        dp[idx1][idx2]=(ans1);
+        
+        return dp[idx1][idx2];
     }
     
     bool isInterleave(string s1, string s2, string s3) {
