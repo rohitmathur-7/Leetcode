@@ -9,28 +9,50 @@ using namespace std;
 
 class Solution{   
 public:
-    bool solve(int idx,vector<int> arr,int sum,int curr,vector<vector<int> > &dp){
-        if(curr>sum) return false;
-        if(idx==arr.size()){
-            if(curr==sum) return true;
-            return false;
+    bool isSubsetSum(vector<int> arr, int sum){
+        int n = arr.size();
+        bool dp[n+1][sum+1];
+        for(int i=0;i<=n;i++){
+            dp[i][0] = true;
+        }
+        for(int i=1;i<=sum;i++){
+            dp[0][i] = false;
+        }
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=sum;j++){
+                if(arr[i-1]<=j){
+                    dp[i][j]= dp[i-1][j-arr[i-1]] || dp[i-1][j];
+                }
+                else{
+                    dp[i][j]= dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][sum];
+        /*
+        // code here 
+        int n=arr.size();
+        vector<vector<int> > dp(n+1,vector<int>(sum+1));
+        
+        for(int i=0;i<=n;i++){
+            dp[i][0]=true;
+        }
+        for(int i=0;i<=sum;i++){
+            dp[0][i]=false;
         }
         
-        if(dp[idx][curr]!=-1) return dp[idx][curr];
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=sum;j++){
+                if(arr[i-1]<=j){
+                    dp[i][j]=dp[i-1][j-arr[i-1]] || dp[i-1][j]; 
+                }
+                else dp[i][j]=dp[i-1][j];
+            }
+        }
         
-        bool g1,g2,ans;
+        return dp[n][sum];
+        */
         
-        g1=solve(idx+1,arr,sum,curr,dp);
-        g2=solve(idx+1,arr,sum,curr+arr[idx],dp);
-        ans=g1||g2;
-    
-        return dp[idx][curr]=ans;
-    }
-
-    bool isSubsetSum(vector<int> arr,int sum){
-        // code here 
-        vector<vector<int> > dp(arr.size(),vector<int>(sum+1,-1));
-        return solve(0,arr,sum,0,dp);
     }
 };
 
