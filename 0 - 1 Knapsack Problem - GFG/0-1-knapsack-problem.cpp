@@ -6,26 +6,25 @@ using namespace std;
  // } Driver Code Ends
 class Solution
 {
-
     public:
-    
-    int solve(int W,int wt[],int val[],int n,vector<vector<int> > &dp){
-       if(n<=0 || W<=0) return 0;
-       if(dp[n][W]!=-1) return dp[n][W];
-       
-       if(wt[n-1]<=W){
-            return dp[n][W]=max(val[n-1]+solve(W-wt[n-1],wt,val,n-1,dp),solve(W,wt,val,n-1,dp));
-       }
-       
-       else{
-            return dp[n][W]=solve(W,wt,val,n-1,dp);            
-       }
+    int solve(int W,int wt[],int val[],int n,int idx,vector<vector<int> > &dp){
+        
+        if(idx==n || W==0) return 0;
+        
+        if(dp[idx][W]!=-1) return dp[idx][W];
+        
+        if(wt[idx]<=W){
+            return dp[idx][W]=max(val[idx]+solve(W-wt[idx],wt,val,n,idx+1,dp),solve(W,wt,val,n,idx+1,dp));
+        }
+        else return dp[idx][W]=solve(W,wt,val,n,idx+1,dp);
     }
     
+    //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) { 
-        // Your code here
-       vector<vector<int> > dp(n+1, vector<int>(W+1, -1));
-       return solve(W,wt,val,n,dp);  
+       // Your code here
+       vector<vector<int> > dp(n,vector<int>(W+1,-1));
+       return solve(W,wt,val,n,0,dp);
+       
     }
 };
 
