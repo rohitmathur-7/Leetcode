@@ -8,20 +8,27 @@ class Solution{
 	public:
 	int mod=1000000007;
 	
-	int solve(int arr[], int n, int sum,vector<vector<int> > &dp){
-	    if(sum==0 && n==0) return 1;
-	    if(sum<0 || n<0) return 0;
-	    
-	    if(dp[n][sum]!=-1) return dp[n][sum]%mod;
-	    
-	    return dp[n][sum]=(solve(arr,n-1,sum,dp)%mod+solve(arr,n-1,sum-arr[n-1],dp)%mod)%mod;
-	    
-	}
-	
 	int perfectSum(int arr[], int n, int sum){
         // Your code goes here
-        vector<vector<int> > dp(n+1,vector<int>(sum+1,-1));
-        return solve(arr,n,sum,dp)%mod;
+        vector<vector<int> > dp(n+1,vector<int>(sum+1));
+        int z=0;
+        for(int i=0;i<n;i++){
+            if(arr[i]==0) z++;
+        }
+        for(int i=1;i<=n;i++){
+            dp[i][0]=pow(2,z)-1;
+        } 
+        for(int i=1;i<=sum;i++) dp[0][i]=0;
+        dp[0][0]=1;
+        
+        for(int i=1;i<=n;i++){
+            for(int j=0;j<=sum;j++){
+                if(arr[i-1]<=j) dp[i][j]=(dp[i-1][j]%mod+dp[i-1][j-arr[i-1]]%mod)%mod;
+                else dp[i][j]=dp[i-1][j]%mod;
+            }
+        }
+        
+        return dp[n][sum]%mod;
 	}
 	  
 };
