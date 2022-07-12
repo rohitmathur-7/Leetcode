@@ -6,24 +6,34 @@ using namespace std;
 class Solution{
 
   public:
-    int solve(int arr[],int n,int idx,int sum,int total,vector<vector<int> > &dp){
-        if(idx==n){
-            int d=total-sum;
-            int diff=abs(d-sum);
-            return diff;
-        }
-        
-        if(dp[idx][sum]!=-1) return dp[idx][sum];
-        
-        return dp[idx][sum]=min(solve(arr,n,idx+1,sum+arr[idx],total,dp),solve(arr,n,idx+1,sum,total,dp));
-        
-    }
 	int minDifference(int arr[], int n)  { 
 	    // Your code goes here
 	    int sum=0;
 	    for(int i=0;i<n;i++) sum+=arr[i];
-	    vector<vector<int> > dp(n+1,vector<int>(sum+1,-1));
-	    return solve(arr,n,0,0,sum,dp);
+	   // sum/=2;
+	    vector<vector<bool> > dp(n+1,vector<bool>(sum+1));
+	    
+	    for(int i=0;i<=n;i++){
+	        dp[i][0]=true;
+	    }
+	    for(int i=1;i<=sum;i++){
+	        dp[0][i]=false;
+	    }
+	    
+	    for(int i=1;i<=n;i++){
+	        for(int j=1;j<=sum;j++){
+	            if(arr[i-1]<=j){
+	                dp[i][j]=(dp[i-1][j-arr[i-1]] || dp[i-1][j]);
+	            }
+	            else dp[i][j]=dp[i-1][j];
+	        }
+	    }
+	    
+	    for(int i=sum/2;i>=0;i--){
+	       // cout<<"i: "<<i<<endl;
+	        if(dp[n][i]==true) return sum-2*i;  //(sum-i)-i
+	    }
+	    
 	} 
 };
 
