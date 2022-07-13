@@ -10,21 +10,24 @@ using namespace std;
 
 class Solution{
   public:
-    int solve(int price[],int n,int idx,int len,vector<vector<int> > &dp){
-        if(idx>=n || len>=n) return 0;
-        if(dp[idx][len]!=-1) return dp[idx][len];
-        
-        int take=INT_MIN;
-        if(len+idx+1<=n) take=price[idx]+solve(price,n,idx,len+idx+1,dp);
-        int not_take=solve(price,n,idx+1,len,dp);
-        
-        return dp[idx][len]=max(take,not_take);
-    }
-  
-    int cutRod(int price[], int n) {
+    int cutRod(int price[],int n) {
         //code here
-        vector<vector<int> > dp(n+1,vector<int>(n+1,-1));
-        return solve(price,n,0,0,dp);
+        int dp[n+1][n+1];
+        for(int i=0;i<=n;i++){
+            dp[i][0]=0;
+            dp[0][i]=0;
+        }
+        
+        for(int i=1;i<=n;i++){
+            for(int j=0;j<=n;j++){
+                dp[i][j]=dp[i-1][j];
+                if(i<=j){
+                    dp[i][j]=max(dp[i][j],price[i-1]+dp[i][j-i]);
+                }
+            }
+        }
+        
+        return dp[n][n];
     }
 };
 
