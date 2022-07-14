@@ -12,7 +12,7 @@ public:
             return dp[cur][amount]=findLowestCoins(coins,cur+1,amount,dp);
         }
         else {
-            return dp[cur][amount]=min(1 + findLowestCoins(coins,cur,amount-coins[cur],dp),findLowestCoins(coins,cur+1,amount,dp));
+            return dp[cur][amount]=min(findLowestCoins(coins,cur+1,amount,dp),1 + findLowestCoins(coins,cur,amount-coins[cur],dp));
         }
     }
     
