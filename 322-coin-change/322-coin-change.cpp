@@ -11,12 +11,12 @@ public:
         int res = -1;
         if (coins[cur] > amount) {
             int doNotTakeCoin = findLowestCoins(coins,cur+1,amount,dp);
-            dp[cur][amount] = res = doNotTakeCoin;
+            res = doNotTakeCoin;
         }
         else {
             int takeCoin = 1 + findLowestCoins(coins,cur,amount-coins[cur],dp);
             int doNotTakeCoin = findLowestCoins(coins,cur+1,amount,dp);
-            dp[cur][amount] = res = min(takeCoin, doNotTakeCoin);
+            res = min(takeCoin, doNotTakeCoin);
         }
         return dp[cur][amount] = res;
     }
