@@ -8,17 +8,12 @@ public:
         if (dp[cur][amount] != -1)
             return dp[cur][amount];
         
-        // int res = -1;
         if (coins[cur] > amount) {
             return dp[cur][amount]=findLowestCoins(coins,cur+1,amount,dp);
-            // res = doNotTakeCoin;
         }
         else {
-            int takeCoin = 1 + findLowestCoins(coins,cur,amount-coins[cur],dp);
-            int doNotTakeCoin = findLowestCoins(coins,cur+1,amount,dp);
-            return dp[cur][amount] = min(takeCoin, doNotTakeCoin);
+            return dp[cur][amount]=min(1 + findLowestCoins(coins,cur,amount-coins[cur],dp),findLowestCoins(coins,cur+1,amount,dp));
         }
-        // return dp[cur][amount] = res;
     }
     
     int coinChange(vector<int>& coins, int amount) {
