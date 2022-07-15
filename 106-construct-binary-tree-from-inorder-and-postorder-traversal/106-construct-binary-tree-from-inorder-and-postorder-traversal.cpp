@@ -12,24 +12,23 @@
 class Solution {
 public:
     
-    TreeNode* build(vector<int>& postorder,int postStart,int postEnd,vector<int>& inorder,int inStart,int inEnd,map<int,int> &mp){
-        if(postStart>postEnd || inStart>inEnd) return NULL;
-
-        TreeNode* root=new TreeNode(postorder[postEnd]);
-        int inPos=mp[postorder[postEnd]];
-        int nums=inPos-inStart;
+    TreeNode* build(vector<int>& postorder,vector<int>& inorder,int &rootIdx,int left,int right,map<int,int> &mp){
+        if(left>right) return NULL;
+        int inPos=mp[postorder[rootIdx]];
+        rootIdx--;
+        TreeNode* root=new TreeNode(inorder[inPos]);
+        root->right=build(postorder,inorder,rootIdx,inPos+1,right,mp);
+        root->left=build(postorder,inorder,rootIdx,left,inPos-1,mp);
         
-        root->left=build(postorder,postStart,postStart+nums-1,inorder,inStart,inPos-1,mp);
-        root->right=build(postorder,postStart+nums,postEnd-1,inorder,inPos+1,inEnd,mp);
-        
-        return root;
-        
+        return root;        
     }
     
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int rootIdx=postorder.size()-1;
         map<int,int> mp;
-        for(int i=0;i<inorder.size();i++) mp[inorder[i]]=i;
-        
-        return build(postorder,0,postorder.size()-1,inorder,0,inorder.size()-1,mp);
+        for(int i=0;i<inorder.size();i++){
+            mp[inorder[i]]=i;
+        }
+        return build(postorder,inorder,rootIdx,0,inorder.size()-1,mp);
     }
 };
