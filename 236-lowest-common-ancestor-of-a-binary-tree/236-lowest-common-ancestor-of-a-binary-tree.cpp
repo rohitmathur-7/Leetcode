@@ -9,32 +9,17 @@
  */
 class Solution {
 public:
-    bool solve(TreeNode* root,TreeNode* cur,vector<TreeNode*> &tmp){
-        if(root==NULL) return false;
-        if(root->val==cur->val){
-            tmp.push_back(cur);
-            return true;
-        }
-        
-        if(solve(root->left,cur,tmp) || solve(root->right,cur,tmp)){
-            tmp.push_back(root);
-            return true;
-        }
-        return false;
-    }
-    
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        vector<TreeNode*> a,b;
-        solve(root,p,a);
-        solve(root,q,b);
-        TreeNode* ans;
-        for(auto x:a){
-            if(find(b.begin(),b.end(),x)!=b.end()){
-                ans=x;
-                break;
-            }
+        if(root==NULL || root==p || root==q){
+            return root;
         }
         
-        return ans;
+        TreeNode* left=lowestCommonAncestor(root->left,p,q);
+        TreeNode* right=lowestCommonAncestor(root->right,p,q);
+        
+        if(left==NULL) return right;
+        else if(right==NULL) return left;
+        
+        return root;
     }
 };
