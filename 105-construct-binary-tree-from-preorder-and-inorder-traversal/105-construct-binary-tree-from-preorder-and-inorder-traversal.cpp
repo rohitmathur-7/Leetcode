@@ -12,15 +12,16 @@
 class Solution {
 public:
     
-    TreeNode* build(vector<int>& preorder, vector<int>& inorder,int &rootIdx,int left,int right){
+    TreeNode* build(vector<int>& preorder,vector<int>& inorder,int &rootIdx,int left,int right){
         if(left>right) return NULL;
         int p=left;
         while(inorder[p]!=preorder[rootIdx]) p++;
         rootIdx++;
-        TreeNode* node=new TreeNode(inorder[p]);
-        node->left=build(preorder,inorder,rootIdx,left,p-1);
-        node->right=build(preorder,inorder,rootIdx,p+1,right);
-        return node;
+        TreeNode* new_node=new TreeNode(inorder[p]);
+        new_node->left=build(preorder,inorder,rootIdx,left,p-1);
+        new_node->right=build(preorder,inorder,rootIdx,p+1,right);
+        
+        return new_node;
     }
     
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
