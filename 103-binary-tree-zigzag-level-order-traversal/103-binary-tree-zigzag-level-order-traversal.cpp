@@ -16,31 +16,21 @@ public:
         if(root==NULL) return ans;
         queue<TreeNode* > q;
         q.push(root);
-        int c=0;
+        bool LeftToRight=true;
         while(!q.empty()){
             int n=q.size();
-            vector<int> tmp;
-            stack<TreeNode* > st;
+            vector<int> tmp(n);
             TreeNode* node;
             for(int i=0;i<n;i++){
                 node=q.front();q.pop();
-                if(c%2==0){
-                    if(node->left!=NULL) st.push(node->left);
-                    if(node->right!=NULL) st.push(node->right);    
-                }
-                else{
-                    if(node->right!=NULL) st.push(node->right); 
-                    if(node->left!=NULL) st.push(node->left);
-                }
+                if(LeftToRight) tmp[i]=node->val;
+                else tmp[n-1-i]=node->val;
                 
-                tmp.push_back(node->val);
+                if(node->left!=NULL) q.push(node->left);
+                if(node->right!=NULL) q.push(node->right);    
             }
-            while(!st.empty()){
-                q.push(st.top());
-                st.pop();
-            }
+            LeftToRight = !LeftToRight;
             ans.push_back(tmp);
-            c++;
         }
         return ans;
     }
