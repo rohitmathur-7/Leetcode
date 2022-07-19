@@ -1,0 +1,1 @@
+LPS(s) = LCS(s,reverse(s))
