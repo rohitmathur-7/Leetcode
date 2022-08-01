@@ -2,9 +2,9 @@ class Solution {
 public:
     
     void dfs(int node,vector<int> &edges,int c,vector<int> &dist){
-        if(node!=-1 && dist[node]==-1){
+        while(node!=-1 && dist[node]==-1){
             dist[node]=c++;
-            dfs(edges[node],edges,c,dist);
+            node=edges[node];
         }
     }
     
