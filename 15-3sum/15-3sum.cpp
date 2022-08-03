@@ -5,10 +5,8 @@ public:
         int n=nums.size();
         int target=0;
         sort(nums.begin(),nums.end());
-        set<vector<int>> st;
         for(int i=0;i<n;i++){
             int new_target=target-nums[i];
-            unordered_map<int,int> mp;
             int a=i+1,b=n-1;
             while(a<b){
                 int s=nums[a]+nums[b];
@@ -19,8 +17,7 @@ public:
                     tmp[0]=nums[i];
                     tmp[1]=nums[a];
                     tmp[2]=nums[b];
-                    sort(tmp.begin(),tmp.end());
-                    st.insert(tmp);
+                    ans.push_back(tmp);
                     while(a<b && nums[a]==tmp[1]){
                         a++;
                     }
@@ -32,10 +29,6 @@ public:
             
             while(i+1<n && nums[i]==nums[i+1]) i++;
      
-        }
-        
-        for(auto x:st){
-            ans.push_back(x);
         }
         
         return ans;
