@@ -1,24 +1,25 @@
 class Solution {
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        int a=0,shift=0,tmp=0;
-        for(int i=0;i<m+shift;i++){
-            if(a<nums2.size() && nums2[a]<=nums1[i]){
-                // cout<<"i: "<<i<<" arr: "<<nums1[i]<<endl;
-                for(int j=m+shift-1;j>=i;j--){
-                    if(j+1<n+m) nums1[j+1]=nums1[j];
-                }
-                nums1[i]=nums2[a];
-                shift++;
-                tmp++;
-                a++;
+        int a=m-1,b=n-1,k=m+n-1;
+        
+        while(a>=0 && b>=0){
+            if(nums1[a]<nums2[b]){
+                nums1[k]=nums2[b];
+                b--;
             }
-        }
-        if(tmp<n){
-            for(int i=m+shift;i<n+m;i++){
-                nums1[i]=nums2[tmp];
-                tmp++;
+            else if(nums1[a]>=nums2[b]){
+                nums1[k]=nums1[a];
+                a--;
             }
+            k--;
         }
+        
+        while(b>=0){
+            nums1[k]=nums2[b];
+            k--,b--;
+        }
+                
+        
     }
 };
