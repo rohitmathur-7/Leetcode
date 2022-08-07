@@ -1,27 +1,39 @@
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
-typedef tree<double, null_type, less_equal<double>, rb_tree_tag, tree_order_statistics_node_update> pbds;
-
 class MedianFinder {
 public:
-    pbds st;
-    int n=0;
+    priority_queue<double> left;
+    priority_queue <double, vector<double>, greater<double>> right;
     MedianFinder() {
         
     }
     
-    void addNum(int num) {
-        n++;
-        st.insert(double(num));
+    void addNum(int num){
+        if(left.empty()) left.push(num);
+        else if(left.size()==right.size()){
+            if(num<=right.top()) left.push(num);
+            else{
+                int a=right.top();
+                right.pop();
+                right.push(num);
+                left.push(a);
+            }
+        }
+        else if(left.size()>right.size()){
+            if(left.top()>num){
+                int a=left.top();
+                left.pop();
+                left.push(num);
+                right.push(a);
+            }
+            else{
+                right.push(num);
+            }
+        }
     }
     
     double findMedian() {
-        if(n%2==0){
-            return ((double)*st.find_by_order(n/2)+*st.find_by_order((n/2)-1))/2;
-        }   
+        if(left.size()>right.size()) return left.top();
         else{
-            return *st.find_by_order(n/2);
+            return (left.top()+right.top())/2;
         }
     }
 };
