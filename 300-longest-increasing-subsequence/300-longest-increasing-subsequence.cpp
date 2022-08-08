@@ -1,24 +1,19 @@
 class Solution {
 public:
-    vector<vector<int>> dp;
-    
-    int solve(vector<int>& nums,int idx,int prev_idx){
-        if(idx>=nums.size()) return 0;
-        if(dp[idx][prev_idx+1]!=-1) return dp[idx][prev_idx+1];
+    int lengthOfLIS(vector<int>& nums){
+        int n=nums.size();
+        vector<int> dp(n,1);
         
-        int include=0,exclude=0;
-        exclude=solve(nums,idx+1,prev_idx);
-        if(prev_idx==-1 || nums[idx]>nums[prev_idx]){
-            include=1+solve(nums,idx+1,idx);
+        int ans=1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(nums[i]>nums[j]){
+                    dp[i]=max(dp[i],dp[j]+1);
+                    ans=max(ans,dp[i]);
+                }
+            }
         }
         
-        return dp[idx][prev_idx+1]=max(include,exclude);
-    }
-    
-    int lengthOfLIS(vector<int>& nums){
-        int sze=nums.size();
-        dp.resize(sze,vector<int>(sze,-1));
-        
-        return solve(nums,0,-1);
+        return ans;
     }
 };
