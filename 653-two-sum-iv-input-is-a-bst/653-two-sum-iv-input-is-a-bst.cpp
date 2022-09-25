@@ -13,22 +13,18 @@ class Solution {
 public:
     bool findTarget(TreeNode* root, int k) {
         stack<TreeNode*> st;
-        vector<int> v;
+        unordered_map<int,bool> mp;
+        
         do{
             while(root!=NULL){
                 st.push(root);
                 root=root->left;
             }
             root=st.top();st.pop();
-            v.push_back(root->val);
+            if(mp[k-root->val]) return true;
+            mp[root->val]=true;
             root=root->right;
         }while(!st.empty() || root!=NULL);
-        
-        unordered_map<int,bool> mp;
-        for(auto x:v){
-            if(mp[k-x]) return true;
-            mp[x]=true;
-        }
         
         return false;
     }
