@@ -14,10 +14,9 @@ public:
     
     int peakIndexInMountainArray(vector<int>& arr){
         int n=arr.size();
-        int l=0,r=n,mid,ans=-1;
+        int l=0,r=n-1,mid,ans=-1;
         while(r>(l+1)){
             mid=l+(r-l)/2;
-            // cout<<"l: "<<l<<" r: "<<r<<" mid: "<<mid<<endl;
             if(can(mid,arr)){
                 ans=mid;
                 break;
