@@ -10,22 +10,21 @@ using namespace std;
 
 class Solution{
     public:
-    
-    int solve(vector<int>& arr, int &k,int l,int r,vector<vector<int>> &dp){
-        if(l==r) return 0;
-        if(dp[l][r]!=-1) return dp[l][r];
-        int mx=*max_element(arr.begin()+l,arr.begin()+r+1);
-        int mn=*min_element(arr.begin()+l,arr.begin()+r+1);
-        if((mx-mn)<=k) return 0;
-        
-        return dp[l][r]=1+min(solve(arr,k,l+1,r,dp),solve(arr,k,l,r-1,dp));
-    }
-    
     int removals(vector<int>& arr, int k){
         //Code here
-        vector<vector<int>> dp(arr.size(),vector<int>(arr.size(),-1));
+        int n=arr.size();
         sort(arr.begin(),arr.end());
-        return solve(arr,k,0,arr.size()-1,dp);
+        int len=0;
+        int i=0,j=0;
+        while(i<n && j<n){
+            if((arr[j]-arr[i])<=k){
+                len=max(len,j-i+1);
+                j++;
+            }
+            else i++;
+        }
+    
+        return n-len;
     }
 };
 
