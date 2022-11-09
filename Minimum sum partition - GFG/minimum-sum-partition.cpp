@@ -1,44 +1,36 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution{
-
   public:
+  
+    int solve(int arr[], int &n,int idx,int s1,int sum,vector<vector<int>> &dp){
+        if(idx==n){
+            int rem=sum-s1;
+            return abs(s1-rem);
+        }
+        
+        if(dp[idx][s1]!=-1) return dp[idx][s1];
+        
+        int a1=solve(arr,n,idx+1,s1+arr[idx],sum,dp);
+        int a2=solve(arr,n,idx+1,s1,sum,dp);
+        
+        return dp[idx][s1]=min(a1,a2);
+    }
+  
 	int minDifference(int arr[], int n)  { 
 	    // Your code goes here
 	    int sum=0;
 	    for(int i=0;i<n;i++) sum+=arr[i];
-	    bool dp[n+1][sum+1];
-	    for(int i=0;i<=n;i++){
-	        dp[i][0]=true;
-	    }
-	    for(int i=1;i<=sum;i++){
-	        dp[0][i]=false;
-	    }
-	    
-	    for(int i=1;i<=n;i++){
-	        for(int j=1;j<=sum;j++){
-	            if(arr[i-1]<=j){
-	                dp[i][j]=dp[i-1][j-arr[i-1]] || dp[i-1][j];
-	            }
-	            else dp[i][j]=dp[i-1][j];
-	        }
-	    }
-	    
-	    for(int i=sum/2;i>=0;i--){
-	        if(dp[n][i]){
-	            return sum-(2*i);
-	        }
-	    }
-	    
-	    
+	    vector<vector<int>> dp(n,vector<int>(sum+1,-1));
+	    return solve(arr,n,0,0,sum,dp);
 	} 
 };
 
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 int main() 
 {
    
@@ -61,4 +53,5 @@ int main()
 	     
     }
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
